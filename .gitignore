@@ -1,0 +1,14 @@
+# Ignore virtual environments
+CID_ENV/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build / coverage
+.pytest_cache/
+.coverage
+htmlcov/
