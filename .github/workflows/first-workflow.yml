@@ -79,10 +79,14 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-# ==============================================================================
-# NEXT STEPS TO LEARN:
-# 1. Add a linter (flake8, pylint) to check code quality
-# 2. Add unit tests (pytest, unittest)
-# 3. Add matrix strategy to test on multiple Python versions
-# 4. Add deployment step (deploy to AWS, Heroku, etc.)
-# ==============================================================================
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying"
