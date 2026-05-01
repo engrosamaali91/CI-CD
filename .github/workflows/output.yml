@@ -1,5 +1,5 @@
-name: expressions and contexts
-on: [workflow_dispatch]
+name: expressions contexts
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
