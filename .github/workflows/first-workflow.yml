@@ -39,14 +39,26 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 # JOBS: Each job runs on a separate virtual machine (runner)
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running tests"
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Running tests"
 
-  deploy:
-    needs: test
+#   deploy:
+#     needs: test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Deploying"
+
+
+jobs:
+  test1:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying"
+      - run: echo "Test 1"
+
+  test2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Test 2"
