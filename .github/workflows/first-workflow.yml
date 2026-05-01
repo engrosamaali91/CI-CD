@@ -30,21 +30,37 @@ on: [push, pull_request, workflow_dispatch]
 # JOBS: Each job runs on a separate virtual machine (runner)
 
 jobs:
-  # Job 1: Build
+  # Job 1: LINT - Check code quality (runs first)
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install flake8 linter
+        run: pip install flake8
+      - name: Run flake8 linter
+        # Checks all .py files in the repository
+        run: flake8 . --count --select=E9,F63,F7,W --show-source --statistics
+
+  # Job 2: Build
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: echo "Building..."
 
-  # Job 2: Test (runs in parallel with build by default)
+  # Job 3: Test (runs AFTER lint passes)
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: echo "Testing..."
 
-  # Job 3: Deploy (runs AFTER build AND test complete)
+  # Job 4: Deploy (runs AFTER build AND test complete)
   deploy:
     needs: [build, test]
     runs-on: ubuntu-latest
