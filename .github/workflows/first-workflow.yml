@@ -1,36 +1,88 @@
+# ==============================================================================
+# GITHUB ACTIONS WORKFLOW FILE
+# ==============================================================================
+# This file defines an automated CI/CD pipeline using GitHub Actions.
+#
+# --- WHAT IS CI/CD? ---
+# CI (Continuous Integration): Automatically build and test code every time 
+#   you push changes to the repository. Catches bugs early.
+# CD (Continuous Deployment/Delivery): Automatically deploy code to an 
+#   environment (staging/production) after tests pass.
+#
+# --- KEY CONCEPTS ---
+# 1. Workflow: A automated process defined in YAML
+# 2. Trigger: What event causes the workflow to run (push, PR, manual)
+# 3. Job: A set of steps that run on the same runner
+# 4. Step: Individual tasks (actions or shell commands)
+# 5. Runner: A server that executes your workflow (GitHub provides ubuntu-latest)
+# ==============================================================================
+
 # This is a basic workflow to help you get started with Actions
 
 name: Continuous Integration
 
 # Controls when the workflow will run
+# "on" defines the TRIGGERS - events that start this workflow
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # Trigger on push to main branch (e.g., when you push code)
   push:
     branches: [ "main" ]
+
+  # Trigger on pull request to main branch (when opening a PR)
   pull_request:
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
+  # This is useful for testing or manual deployments
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# JOBS: Each job runs on a separate virtual machine (runner)
 jobs:
   # This workflow contains a single job called "build"
+  # "build" is just a name - you can call it anything
   build:
     # The type of runner that the job will run on
+    # ubuntu-latest = free GitHub-hosted VM with Ubuntu
+    # Other options: windows-latest, macos-latest, or self-hosted
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
+    # STEPS: Individual actions or commands that run in order
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # -----------------------------------------------------
+      # Step 1: CHECKOUT - Get your code
+      # -----------------------------------------------------
+      # "uses" runs a pre-built GitHub Action
+      # actions/checkout@v4 downloads your repository code
+      # so the workflow can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
+      # -----------------------------------------------------
+      # Step 2: Run a one-line script
+      # -----------------------------------------------------
+      # "run" executes shell commands on the runner
+      # This is where you typically run tests, build code, etc.
       - name: Run a one-line script
         run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
+      # -----------------------------------------------------
+      # Step 3: Run a multi-line script
+      # -----------------------------------------------------
+      # The "|" allows multi-line shell scripts
+      # In real projects, you'd run:
+      #   - pip install -r requirements.txt
+      #   - pytest tests/
+      #   - build your application
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+# ==============================================================================
+# NEXT STEPS TO LEARN:
+# 1. Add a linter (flake8, pylint) to check code quality
+# 2. Add unit tests (pytest, unittest)
+# 3. Add matrix strategy to test on multiple Python versions
+# 4. Add deployment step (deploy to AWS, Heroku, etc.)
+# ==============================================================================
