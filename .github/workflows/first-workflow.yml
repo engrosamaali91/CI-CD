@@ -62,3 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Test 2"
+
+  test3:
+    needs: [test1, test2]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Test 3 (runs after test1 and test2)"
