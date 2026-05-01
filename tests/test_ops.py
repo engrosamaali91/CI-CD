@@ -1,7 +1,7 @@
 import math
 import pytest
 
-from mymath.ops import add, div, mul, sub
+from math import add, div, mul, sub
 
 
 def test_add():
