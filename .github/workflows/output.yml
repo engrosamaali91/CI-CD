@@ -4,4 +4,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "The event that triggered this workflow is: ${{ toJSON(github) }}"
+      - run: echo 'The event that triggered this workflow is: ${{ toJSON(github) }}'
