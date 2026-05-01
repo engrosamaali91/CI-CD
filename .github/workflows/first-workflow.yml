@@ -38,46 +38,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 # JOBS: Each job runs on a separate virtual machine (runner)
-jobs:
-  # This workflow contains a single job called "build"
-  # "build" is just a name - you can call it anything
-  build:
-    # The type of runner that the job will run on
-    # ubuntu-latest = free GitHub-hosted VM with Ubuntu
-    # Other options: windows-latest, macos-latest, or self-hosted
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    # STEPS: Individual actions or commands that run in order
-    steps:
-      # -----------------------------------------------------
-      # Step 1: CHECKOUT - Get your code
-      # -----------------------------------------------------
-      # "uses" runs a pre-built GitHub Action
-      # actions/checkout@v4 downloads your repository code
-      # so the workflow can access it
-      - uses: actions/checkout@v4
-
-      # -----------------------------------------------------
-      # Step 2: Run a one-line script
-      # -----------------------------------------------------
-      # "run" executes shell commands on the runner
-      # This is where you typically run tests, build code, etc.
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # -----------------------------------------------------
-      # Step 3: Run a multi-line script
-      # -----------------------------------------------------
-      # The "|" allows multi-line shell scripts
-      # In real projects, you'd run:
-      #   - pip install -r requirements.txt
-      #   - pytest tests/
-      #   - build your application
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
 
 jobs:
   test:
