@@ -1,8 +1,7 @@
 import math
 import pytest
 
-from math import add, div, mul, sub
-
+from mymath import add, div, mul, sub
 
 def test_add():
     assert add(2, 3) == 5
