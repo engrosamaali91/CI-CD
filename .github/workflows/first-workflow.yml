@@ -23,18 +23,8 @@ name: Continuous Integration
 
 # Controls when the workflow will run
 # "on" defines the TRIGGERS - events that start this workflow
-on:
-  # Trigger on push to main branch (e.g., when you push code)
-  push:
-    branches: [ "main" ]
+on: [push, pull_request, workflow_dispatch]
 
-  # Trigger on pull request to main branch (when opening a PR)
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  # This is useful for testing or manual deployments
-  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 # JOBS: Each job runs on a separate virtual machine (runner)
