@@ -43,7 +43,7 @@ jobs:
         run: pip install flake8
       - name: Run flake8 linter
         # Checks all .py files in the repository
-        run: flake8 . --count --select=E9,F63,F7,W --show-source --statistics
+        run: flake8 src/ tests/ --max-line-length=100
 
   # Job 2: Build
   build:
@@ -62,8 +62,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Run tests
-        run: echo "Running tests..."
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run pytest tests
+        run: pytest tests/ -v
 
   # Job 4: Deploy (runs AFTER build AND test complete)
   deploy:
