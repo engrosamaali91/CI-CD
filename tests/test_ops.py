@@ -1,6 +1,4 @@
 """Tests for code module."""
-import pytest
-
 from code import add, greet, multiply
 
 
