@@ -14,4 +14,4 @@ def test_add_negative():
 
 def test_multiply():
     """Test: 3 * 4 = 12"""
-    assert multiply(3, 4) == 12 
+    assert multiply(3, 4) == 12
