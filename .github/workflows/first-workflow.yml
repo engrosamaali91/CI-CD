@@ -49,11 +49,21 @@ jobs:
       - run: PYTHONPATH=src pytest tests/ -v
 
   # ========== STAGE 4: DEPLOY ==========
-  # Purpose: Deploy if all tests pass
+  # Purpose: Deploy the site if all tests pass
   # Runs: AFTER build AND test complete
   deploy:
     needs: [build, test]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - run: echo "✓ Deployment successful"
+      - name: Deploy docs to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs
+          clean: true
+          commit-message: "Deploy first workflow page"
