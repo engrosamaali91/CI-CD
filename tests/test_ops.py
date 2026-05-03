@@ -1,5 +1,5 @@
-"""Simple tests for code.py"""
-from code import add, multiply
+"""Simple tests for math_ops.py"""
+from math_ops import add, multiply
 
 
 def test_add():
