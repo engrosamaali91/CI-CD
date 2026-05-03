@@ -1,76 +1,59 @@
 # ==============================================================================
-# GITHUB ACTIONS WORKFLOW FILE
+# CI/CD WORKFLOW FOR LEARNING
 # ==============================================================================
-# This file defines an automated CI/CD pipeline using GitHub Actions.
-#
-# --- WHAT IS CI/CD? ---
-# CI (Continuous Integration): Automatically build and test code every time 
-#   you push changes to the repository. Catches bugs early.
-# CD (Continuous Deployment/Delivery): Automatically deploy code to an 
-#   environment (staging/production) after tests pass.
-#
-# --- KEY CONCEPTS ---
-# 1. Workflow: A automated process defined in YAML
-# 2. Trigger: What event causes the workflow to run (push, PR, manual)
-# 3. Job: A set of steps that run on the same runner
-# 4. Step: Individual tasks (actions or shell commands)
-# 5. Runner: A server that executes your workflow (GitHub provides ubuntu-latest)
+# FLOW: Push Code → Lint → Build → Test → Deploy
 # ==============================================================================
-
-# This is a basic workflow to help you get started with Actions
 
 name: Continuous Integration
 
-# Controls when the workflow will run
-# "on" defines the TRIGGERS - events that start this workflow
+# Triggers: When this workflow runs
 on: [push, pull_request, workflow_dispatch]
 
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-# JOBS: Each job runs on a separate virtual machine (runner)
-
 jobs:
-  # Job 1: LINT - Check code quality (runs first)
+  # ========== STAGE 1: LINT ==========
+  # Purpose: Check code quality/style (PEP 8)
+  # Fails if: Code has formatting/style issues
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Install flake8 linter
-        run: pip install flake8
-      - name: Run flake8 linter
-        # Checks all .py files in the repository
-        run: flake8 src/ tests/ --max-line-length=100
+      - run: pip install flake8
+      - run: flake8 src/ tests/ --max-line-length=100
 
-  # Job 2: Build
+  # ========== STAGE 2: BUILD ==========
+  # Purpose: Prepare code for testing
+  # Runs: In parallel with LINT
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Building..."
+      - run: echo "✓ Build successful"
 
-  # Job 3: Test (runs AFTER lint passes)
+  # ========== STAGE 3: TEST ==========
+  # Purpose: Run all pytest tests
+  # Runs: AFTER lint passes
+  # Fails if: Any test fails
   test:
-    needs: lint
+    needs: [lint, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run pytest tests
-        run: pytest tests/ -v
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
 
-  # Job 4: Deploy (runs AFTER build AND test complete)
+  # ========== STAGE 4: DEPLOY ==========
+  # Purpose: Deploy if all tests pass
+  # Runs: AFTER build AND test complete
   deploy:
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Deploying..."
+      - run: echo "✓ Deployment successful"

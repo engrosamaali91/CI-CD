@@ -1,16 +1,11 @@
-"""Simple math operations module for CI/CD learning."""
+"""Simple math functions for CI/CD learning."""
 
 
-def add(a: int, b: int) -> int:
-    """Add two numbers."""
-    return a + b
+def add(x: int, y: int) -> int:
+    """Add two numbers: x + y"""
+    return x + y
 
 
-def multiply(a: int, b: int) -> int:
-    """Multiply two numbers."""
-    return a * b
-
-
-def greet(name: str) -> str:
-    """Return a greeting message."""
-    return f"Hello, {name}!"
+def multiply(x: int, y: int) -> int:
+    """Multiply two numbers: x * y"""
+    return x * y
