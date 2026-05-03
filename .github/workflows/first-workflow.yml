@@ -46,7 +46,7 @@ jobs:
         with:
           python-version: '3.x'
       - run: pip install -r requirements.txt
-      - run: pytest tests/ -v
+      - run: PYTHONPATH=src pytest tests/ -v
 
   # ========== STAGE 4: DEPLOY ==========
   # Purpose: Deploy if all tests pass
